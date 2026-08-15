@@ -577,32 +577,48 @@
   </div>
 
   <!-- JAVASCRIPT -->
-  <script>
-    const modal = document.getElementById('rsvpModal');
+<script>
+  const modal = document.getElementById('rsvpModal');
 
-    function openModal() {
-      modal.classList.add('active');
-    }
+  function openModal() {
+    modal.classList.add('active');
+  }
 
-    function closeModal() {
-      modal.classList.remove('active');
-    }
+  function closeModal() {
+    modal.classList.remove('active');
+  }
 
-    window.onclick = function(event) {
-      if (event.target === modal) {
-        closeModal();
-      }
-    }
-
-    function submitForm(e) {
-      e.preventDefault();
-      const nama = document.getElementById('nama').value;
-      const status = document.getElementById('status').value;
-
-      alert(`Jazakallah Khair ${nama}, konfirmasi Anda (${status}) telah dicatat.`);
+  window.onclick = function(event) {
+    if (event.target === modal) {
       closeModal();
-      document.getElementById('rsvpForm').reset();
     }
-  </script>
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    
+    // 1. Ambil data dari input form
+    const nama = document.getElementById('nama').value;
+    const status = document.getElementById('status').value;
+    const inisial = document.getElementById('inisial').value;
+
+    // 2. MASUKKAN NOMOR WHATSAPP ANDA DI SINI
+    // Format: Gunakan 62 (bukan 0). Contoh: 6281234567890
+    const nomorWA = "6283857184492"; 
+
+    // 3. Format pesan yang akan dikirim ke WA
+    const pesan = `*KONFIRMASI KEHADIRAN NGAJI TIM MANIEZ*%0A%0A` +
+                  `*Nama:* ${encodeURIComponent(nama)}%0A` +
+                  `*Status:* ${encodeURIComponent(status)}%0A` +
+                  `*Inisial & Makanan:* ${encodeURIComponent(inisial || '-')}`;
+
+    // 4. Buka WhatsApp web / aplikasi
+    window.open(`https://wa.me/${nomorWA}?text=${pesan}`, '_blank');
+
+    // 5. Tutup modal & bersihkan form
+    closeModal();
+    document.getElementById('rsvpForm').reset();
+  }
+</script>
 </body>
 </html>
